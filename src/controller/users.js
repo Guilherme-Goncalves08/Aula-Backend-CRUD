@@ -1,0 +1,49 @@
+import ServiceUser from '../service/users.js'
+
+class ControllerUser {
+    FindAll(_, res) {
+        try {
+            const nomes = ServiceUser.FindAll()
+            res.status(200).send({nomes})
+        } catch (error) {
+            res.status(500).send({ error: error.message })
+        }
+    }
+    FindOne(req, res) {
+        try {
+            const index = req.params.index
+            const nomes = ServiceUser.FindOne(index)
+            res.status(200).send({nomes})
+        } catch (error) {
+            res.status(500).send({ error: error.message })
+        }
+    }
+    Create(req, res) {
+        try {
+            const nome = req.body.nome
+            
+            res.status(201).send()
+        } catch (error) {
+            res.status(500).send({ error: error.message })
+        }
+    }
+    Update(req, res) {
+        try {
+            const index = req.params.index
+            const nome = req.body.nome
+            const nomes = ServiceUser.Update(index, nome)
+            res.status(200).send({nomes})
+        } catch (error) {
+            res.status(500).send({ error: error.message })
+        }
+    }
+    Delete(req, res) {
+        try {
+            const index = req.params.index
+            res.send(resultado)
+        } catch (error) {
+            res.status(500).send({ error: error.message })
+        }
+    }
+}
+export default new ControllerUser()
