@@ -1,19 +1,59 @@
-import ModelUser from '../model/users.js'
-class ServiceUser{
-    FindAll(){
-        return ModelUser.FindAll()
+import User from '../model/users.js'
+
+class ServiceUser {
+
+    FindAll() {
+        return User.FindAll()
     }
-    FindOne(index){
-        return ModelUser.FindOne(index)
+
+    async FindOne(id) {
+        if (!id) {
+            throw new Error("Favor informar o ID correto")
+        }
+
+        const user = await User.findByPk(id)
+        if (!user) {
+            throw new Error(`Usuario ${id} não encontrado`)
+        }
+        return
     }
-    Create(nome){
-        return ModelUser.Create(nome)
+
+    async Create(nome, email, senha, ativo) {
+        if (!nome || !email || !senha || !ativo) {
+            throw new Error("favor preencher todos os campos")
+
+        }
+
+        console.log(nome)
+        await User.create({
+            nome, email, senha, ativo
+        })
+
     }
-    Update(index, nome){
-        return ModelUser.Update(index, nome)
+
+    async Update(id, nome) {
+        if (!id) {
+            throw new Error("Favor informar o ID correto")
+        }
+
+        const user = await User.findByPk(id)
+        if (!user) {
+            throw new Error(`Usuario ${id} não encontrado`)
+        }
+        
+        await user.save()
     }
-    Delete(index){
-        return ModelUser.Delete(index)
+
+    async Delete(id) {
+        if (!id) {
+            throw new Error("id incorreto")
+
+        }
+        const user = await User.findByPk(id)
+        if (!user) {
+            throw new Error(`Usuario ${id} não encontrado`)
+        }
+        User.destroy(id)
     }
 
 }
