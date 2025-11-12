@@ -1,6 +1,7 @@
-import express, { Router } from 'express'
-import router from './router/users.js';
+import express from 'express'
 import database from './config/database.js'
+// import Produto from './model/produto.js'
+import router from './router/users.js'
 
 const app = express();
 app.use(express.json())
